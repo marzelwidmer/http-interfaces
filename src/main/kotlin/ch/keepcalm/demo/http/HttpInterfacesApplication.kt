@@ -17,15 +17,20 @@ fun main(args: Array<String>) {
     runApplication<HttpInterfacesApplication>(*args) {
         addInitializers(
             beans {
-                bean("jsonPlaceholderRepository") {
+                bean("jsonPlaceholderRegository") {
                     createJsonPlaceholderRepository()
                 }
                 bean {
                     ApplicationRunner {
                         println("ApplicationRunner ----------------->")
-                        ref<JsonPlaceholderRepository>().findAll().forEach(::println)
+                        println("-----------------> Find All Posts <-----------------")
+                        ref<JsonPlaceholderRepository>().findAllPosts().forEach(::println)
+                        println("-----------------> Find All Comments <-----------------")
+                        ref<JsonPlaceholderRepository>().findAllComments(postId = "2").forEach(::println)
+                        println("-----------------> Find One Comment <-----------------")
+                        println(ref<JsonPlaceholderRepository>().findOneComment("1"))
                     }
-                }
+              }
             }
         )
     }
